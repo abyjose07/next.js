@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { useCount, useDispatchCount } from '../components/Counter'
+import Show from '../components/Show'
 
 const IndexPage = () => {
   const count = useCount()
@@ -17,14 +18,16 @@ const IndexPage = () => {
   return (
     <>
       <h1>HOME</h1>
-      <p>Counter: {count}</p>
+      <p>Counter: {count.state}</p>
       <button onClick={handleIncrease}>Increase</button>
       <button onClick={handleDecrease}>Decrease</button>
       <p>
-        <Link href="/about">
+        <Link href="/about/about">
           <a>About</a>
         </Link>
       </p>
+      <Show></Show>
+      <h1>{count.title}</h1>
     </>
   )
 }

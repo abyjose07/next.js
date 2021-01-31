@@ -1,8 +1,8 @@
-import { useReducer, useContext, createContext } from 'react'
+import { useReducer, useContext, createContext, useState } from 'react'
 
-const CounterStateContext = createContext()
-const CounterDispatchContext = createContext()
-
+const CounterStateContext = createContext();
+const CounterDispatchContext = createContext();
+const customCounterContext = useContext();
 const reducer = (state, action) => {
   switch (action.type) {
     case 'INCREASE':
@@ -17,11 +17,14 @@ const reducer = (state, action) => {
 }
 
 export const CounterProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, 0)
+  const [state, dispatch] = useReducer(reducer, 0);
+  const [customCounter, setCustomCounter] = useState(0);
   return (
     <CounterDispatchContext.Provider value={dispatch}>
-      <CounterStateContext.Provider value={state}>
-        {children}
+      <CounterStateContext.Provider value={{ state, title: 'allbirds' }}>
+        <customCounterContext.Provider value={{ customCounter, setCustomCounter }}>
+          {children}
+        </customCounterContext.Provider>
       </CounterStateContext.Provider>
     </CounterDispatchContext.Provider>
   )

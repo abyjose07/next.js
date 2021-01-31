@@ -1,10 +1,16 @@
 import Link from 'next/link'
-import { useCount, useDispatchCount } from '../components/Counter'
+import { useEffect, useRef } from 'react'
+import { useCount, useDispatchCount } from '../../components/Counter'
+import ShowComponent from '../../components/ShowComponent'
 
 const AboutPage = () => {
   const count = useCount()
   const dispatch = useDispatchCount()
-
+  const ref = useRef(0);
+  useEffect(() => {
+    console.log('about useeffect');
+    ref.current = ref.current + 1;
+  })
   const handleIncrease = (event) =>
     dispatch({
       type: 'INCREASE',
@@ -18,7 +24,7 @@ const AboutPage = () => {
   return (
     <>
       <h1>ABOUT</h1>
-      <p>Counter: {count}</p>
+      <p>Counter: {count.state}</p>
       <button onClick={handleIncrease}>Increase</button>
       <button onClick={handleIncrease15}>Increase By 15</button>
       <p>
@@ -26,6 +32,9 @@ const AboutPage = () => {
           <a>Home</a>
         </Link>
       </p>
+      <h1>{count.title}</h1>
+      <span>AboutPage : ref : {ref.current}</span>
+      <ShowComponent></ShowComponent>
     </>
   )
 }
